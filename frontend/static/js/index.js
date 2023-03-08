@@ -1,9 +1,14 @@
+import Post from '../views/post.js';
+import Setting from '../views/setting.js';
+import NotFound from '../views/notFound.js';
+import Home from '../views/home.js';
+
 const router = async () => {
   const routes = [
-    { path: '/', view: () => console.log('home') },
-    { path: '/post', view: () => console.log('post') },
-    { path: '/setting', view: () => console.log('setting') },
-    { path: '/404', view: () => console.log('NotFound') },
+    { path: '/', view: Home },
+    { path: '/post', view: Post },
+    { path: '/setting', view: Setting },
+    { path: '/404', view: NotFound },
   ];
 
   const pageMatches = routes.map((route) => {
@@ -19,7 +24,10 @@ const router = async () => {
       isMatch: true,
     };
   }
-  console.log(match.route.view());
+
+  const view = new match.route.view();
+
+  document.querySelector('#app').innerHTML = await view.getHtml();
 };
 
 document.addEventListener('DOMContentLoaded', () => {
